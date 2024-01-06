@@ -4,15 +4,22 @@ class Solution:
         left = 0
         right = 0
 
+        totalBlock=0
         lastCol = 0
 
-        while left < len(height)-1:
+        while right <= len(height)-2:
             if height[left] <= lastCol: 
                 left+=1
                 right = left+1
                 lastCol = height[right]
-            while height[right] < height[left]:
+            if height[right] < height[left]:
                 right+=1
+            if height[right] >= height[left]:
+                lastCol = height[right]
+                for block in height[left:right]:
+                    totalBlock += block 
+                water += (right-left)*left - totalBlock
+                left=right
         
         return water
 
