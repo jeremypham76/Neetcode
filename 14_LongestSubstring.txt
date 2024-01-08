@@ -1,0 +1,9 @@
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        a=['']
+        for i in s:
+            if i not in a[len(a)-1]:
+                a[len(a)-1]+=i
+            else:
+                a.append(a[len(a)-1][a[len(a)-1].index(i)+1:len(a[len(a)-1])]+i)
+        return max(map(len,a))
