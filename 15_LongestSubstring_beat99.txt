@@ -1,0 +1,18 @@
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        if not s:
+            return 0
+
+        char_index = {}  # Dictionary to store the last seen positions of characters
+        max_length = 0
+        start_index = 0
+
+        for end_index, char in enumerate(s):
+            if char in char_index and char_index[char] >= start_index:
+                # If the character is repeated and its last seen position is within the current substring,
+                # update the starting index to the position after the last occurrence of the character.
+                start_index = char_index[char] + 1
+            char_index[char] = end_index  # Update the last seen position of the character
+            max_length = max(max_length, end_index - start_index + 1)
+
+        return max_length
