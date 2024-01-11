@@ -1,0 +1,37 @@
+class Solution(object):
+    def minWindow(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: str
+        """
+
+        def isValid(s_count, t_count):
+            for letter, count in t_count.items():
+                if letter not in s_count or s_count[letter] < count:
+                    return False
+            return True
+        
+        s_count = {}
+        t_count = {}
+
+        # Populate t_count
+        for letter in t:
+            t_count[letter] = t_count.get(letter, 0) + 1
+
+        min_window = ""
+        left = 0
+        min_len = float("inf")
+
+        for right in range(len(s)):
+            s_count[s[right]] = s_count.get(s[right], 0) + 1
+
+            while isValid(s_count, t_count):
+                if right - left + 1 < min_len:
+                    min_len = right - left + 1
+                    min_window = s[left:right + 1]
+
+                s_count[s[left]] -= 1
+                left += 1
+
+        return min_window
