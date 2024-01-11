@@ -1,0 +1,41 @@
+class Solution(object):
+    def checkInclusion(self, s1, s2):
+        """
+        :type s1: str
+        :type s2: str
+        :rtype: bool
+        """
+        window_start = 0
+        window_end = len(s1)
+        window_dict = {}
+   
+    
+        # Initialize an empty dictionary
+        s1_dict = {}
+
+        # Count the frequency of each letter in the string
+        for letter in s1:
+            # If the letter is already in the dictionary, increment its count; otherwise, initialize it to 1
+            if letter in s1_dict:
+                s1_dict[letter] += 1
+            else:
+                s1_dict[letter] = 1
+        
+
+        while window_end <= len(s2):
+            for letter in s2[window_start:window_end]:
+                if letter in window_dict:
+                    window_dict[letter] += 1
+                else:
+                    window_dict[letter] = 1
+            
+            print(window_dict)
+
+            if window_dict == s1_dict:
+                return True
+            else:
+                window_start +=1
+                window_end +=1
+                window_dict = {}
+        
+        return False
