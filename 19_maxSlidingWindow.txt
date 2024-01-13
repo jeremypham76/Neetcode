@@ -4,18 +4,17 @@ class Solution:
         max_indices = deque()  # Initialize the deque to store indices of elements
 
         for right in range(len(nums)):
-            # Remove elements from the front of max_indices that are out of the current window
+            # Remove elements from the left of max_indices that are out of the current window
             while max_indices and max_indices[0] < right - k + 1:
                 max_indices.popleft()
             
-            # Add the current element's index to max_indices while maintaining a decreasing order
+            # If the current element is bigger than the most right item from max_indices, pop the item index
             while max_indices and nums[max_indices[-1]] < nums[right]:
                 max_indices.pop()
             max_indices.append(right)
 
-            # Check if the leftmost element is out of the current window
+            # Check if the window size becomes equal to k
             if right >= k - 1:
                 max_window.append(nums[max_indices[0]])  # Append the maximum value to the result list
 
         return max_window
-        
