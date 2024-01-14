@@ -1,39 +1,31 @@
-class MinStack:
-    def __init__(self):
-        # Initialize two stacks: one for elements and one for minimum values
-        self.stack = []        # Stack to store elements
-        self.min_stack = []    # Stack to store minimum values
+class Solution(object):
+    def evalRPN(self, tokens):
+        """
+        :type tokens: List[str]
+        :rtype: int
+        """
+        numbers = []
+
+        for token in tokens:
+            if token not in "+-*/" :
+                numbers.append(int(token))
+            else:
+                b = numbers.pop()
+                a = numbers.pop()
+                if token == '+':
+                    numbers.append(a + b)
+                elif token == '-':
+                    numbers.append(a - b)
+                elif token == '*':
+                    numbers.append(a * b)
+                else:
+                    # Handle division by zero
+                    if a // b < 0 and a % b != 0:
+                        numbers.append(a // b + 1)
+                    else:
+                        numbers.append(a // b)
         
-    def push(self, val):
-        # Push the element onto the element stack
-        self.stack.append(val)
+        # The final result is the only element left on the stack
+        return numbers[0]
+
         
-        # Calculate the minimum value for the current element and push it onto the min stack.
-        # If min_stack is empty, we use the current element as the minimum.
-        # Otherwise, we compare the current element with the current minimum value and take the smaller one.
-        self.min_stack.append(min(val, self.min_stack[-1] if self.min_stack else val))
-
-    def pop(self):
-        # Pop the top element from both the element stack and the min stack.
-        self.stack.pop()
-        self.min_stack.pop()
-
-    def top(self):
-        if self.stack:
-            # Check if the element stack is not empty, and return the top element.
-            return self.stack[-1]
-
-    def getMin(self):
-        if self.min_stack:
-            # Check if the min stack is not empty, and return the top element (the current minimum).
-            return self.min_stack[-1]
-
-# Your MinStack object will be instantiated and called as such:
-# obj = MinStack()
-# obj.push(val)
-# obj.pop()
-# param_3 = obj.top()
-# param_4 = obj.getMin()
-
-#The key idea here is that the min stack always has the same number of elements as the main stack, 
-#and each element in the min stack represents the minimum value up to that point in the main stack.
