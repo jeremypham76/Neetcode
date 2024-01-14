@@ -1,0 +1,23 @@
+class Solution:
+    def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        # Create a deque to store indices of elements
+        indices_deque = deque()
+        max_values = []  # List to store maximum values for each sliding window
+        
+        for i, num in enumerate(nums):
+            # Remove indices that are out of the current window
+            while indices_deque and indices_deque[0] <= i - k:
+                indices_deque.popleft()
+            
+            # Remove indices of elements that are less than or equal to the current element
+            while indices_deque and nums[indices_deque[-1]] <= num:
+                indices_deque.pop()
+            
+            # Append the current index to the deque
+            indices_deque.append(i)
+            
+            # If we have reached a window of size 'k', add the maximum value to the result list
+            if i >= k - 1:
+                max_values.append(nums[indices_deque[0]])
+        
+        return max_values
