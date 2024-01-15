@@ -1,0 +1,22 @@
+class Solution(object):
+    def generateParenthesis(self, n):
+    # Helper function to generate valid combinations of parentheses
+        def backtrack(s, left, right):
+            # Base case: If the length of the string is 2 * n, we have a valid combination
+            if len(s) == 2 * n:
+                result.append(s)
+                return
+            # Recursive case:
+            # Add an opening parenthesis '(' if we haven't reached the maximum allowed 'left'
+            if left < n:
+                backtrack(s + '(', left + 1, right)
+            # Add a closing parenthesis ')' if we can close an existing opening parenthesis
+            if right < left:
+                backtrack(s + ')', left, right + 1)
+
+        # Initialize an empty list to store the valid combinations
+        result = []
+        # Start the backtracking process with an empty string and counts of left and right parentheses
+        backtrack('', 0, 0)
+        # Return the list of valid combinations
+        return result
