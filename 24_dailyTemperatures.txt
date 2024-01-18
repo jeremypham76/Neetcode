@@ -1,0 +1,19 @@
+class Solution(object):
+    def dailyTemperatures(self, temperatures):
+        """
+        :type temperatures: List[int]
+        :rtype: List[int]
+        """
+        n = len(temperatures)
+        result = [0] * n
+        pending = []  # Stack to store indices of temperatures that are waiting for warmer days
+        
+        for i in range(n):
+            # While there are pending days and the current temperature is higher than the temperature on the pending day
+            while pending and temperatures[i] > temperatures[pending[-1]]:
+                prev_index = pending.pop()
+                result[prev_index] = i - prev_index  # Update the result list with the number of days to wait
+            
+            pending.append(i)  # Add the current day to the pending stack
+        
+        return result                 
