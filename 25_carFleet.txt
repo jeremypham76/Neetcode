@@ -1,0 +1,17 @@
+def carFleet(target, position, speed):
+    # Calculate the time each car will take to reach the target
+    times = [(target - pos) / spd for pos, spd in zip(position, speed)]
+
+    # Create a list of pairs (position, time) and sort it by position
+    cars = sorted(zip(position, times), reverse=True)
+
+    count = 0  # To count the number of car fleets
+    current_time = -1  # Initialize with a negative time
+
+    for pos, time in cars:
+        if time > current_time:
+            # This car can't catch up with the car in front, so a new fleet is formed
+            current_time = time
+            count += 1
+
+    return count
