@@ -1,0 +1,23 @@
+class Solution:
+    def minEatingSpeed(self, piles: List[int], h: int) -> int:
+        # Initialize the search range for eating speeds
+        low, high = 1, max(piles) + 1
+
+        # Perform binary search
+        while low < high:
+            # Calculate the mid-point of the search range
+            mid = (low + high) // 2
+
+            # Calculate the total hours needed for the current eating speed
+            total = sum(math.ceil(banana / mid) for banana in piles)
+
+            # Adjust the search range based on the comparison with available hours
+            if total > h:
+                # If total hours is greater than available hours, search in the higher speed range
+                low = mid + 1
+            else:
+                # If total hours is less than or equal to available hours, search in the lower speed range
+                high = mid
+
+        # The 'low' variable now contains the minimum eating speed
+        return low
