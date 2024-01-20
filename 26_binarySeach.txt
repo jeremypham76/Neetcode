@@ -1,0 +1,22 @@
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        # Initialize left and right pointers for the search space
+        left, right = 0, len(nums) - 1
+
+        # Continue the search as long as the search space is not empty
+        while left <= right:
+            # Calculate the middle index
+            mid = (left + right) // 2
+
+            # Check if the target is in the left half
+            if nums[mid] > target:
+                right = mid - 1  # Adjust the right pointer to search in the left half
+            # Check if the target is in the right half
+            elif nums[mid] < target:
+                left = mid + 1  # Adjust the left pointer to search in the right half
+            else:
+                # If the middle element is equal to the target, return its index
+                return mid 
+
+        # If the target is not found in the list, return -1
+        return -1
