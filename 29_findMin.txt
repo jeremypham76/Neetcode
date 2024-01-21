@@ -18,7 +18,7 @@ class Solution(object):
             if nums[mid] > nums[mid + 1]:
                 return nums[mid + 1]
 
-            # Check which side of mid is unsorted and adjust pointers
+            # Find out which side the minium element is in
             if nums[mid] < nums[left]:
                 right = mid
             else:
