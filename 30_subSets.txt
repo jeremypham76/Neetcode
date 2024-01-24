@@ -1,0 +1,28 @@
+class Solution(object):
+    def subsets(self, nums):
+        def backtrack(start, path):
+        # Add the current subset to the result
+            result.append(path[:])
+            
+            # Explore all possible subsets starting from the current index
+            for i in range(start, len(nums)):
+                # Add the current element to the subset
+                path.append(nums[i])
+                
+                # Recursively explore subsets starting from the next index
+                #i.e. Decision to include num[i]
+                backtrack(i + 1, path)
+                
+                # Remove the last element to backtrack and explore other subsets
+                #i.e. Decision to NOT include num[i]
+                path.pop()
+
+        # Initialize the result list
+        result = []
+        
+        # Start the backtracking process from index 0 with an empty subset
+        backtrack(0, [])
+        
+        # Return the final list of subsets
+        return result
+                
