@@ -1,0 +1,18 @@
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        # Initialize pointers for the current node, previous node, and next node
+        prev = None
+        current = head
+
+        # Iterate through the linked list
+        while current is not None:
+            # Save the next node to avoid losing the reference during the reversal
+            next_node = current.next
+            # Reverse the direction of the current node
+            current.next = prev
+            # Move the pointers one step forward in the list
+            prev = current
+            current = next_node
+
+        # 'prev' now points to the head of the reversed list
+        return prev
