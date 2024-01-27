@@ -1,0 +1,28 @@
+class Solution:
+    def largestRectangleArea(self, heights: List[int]) -> int:
+        stack = []
+        max_area = 0
+
+        # Iterate through each bar in the histogram
+        for i in range(len(heights)):
+            # Check while the stack is not empty and the current bar is smaller than the bar at the top of the stack
+            while stack and heights[i] < heights[stack[-1]]:
+                # Pop the top of the stack (index of a bar)
+                top = stack.pop()
+
+                # Calculate the area using the height of the popped bar
+                # Width is the difference between the current index and the new top of the stack
+                width = i if not stack else i - stack[-1] - 1
+                max_area = max(max_area, heights[top] * width)
+
+            # Push the current index onto the stack if the stack is empty or the current bar is greater than the bar at the top of the stack
+            stack.append(i)
+
+        # Process the remaining bars in the stack
+        while stack:
+            top = stack.pop()
+            width = len(heights) if not stack else len(heights) - stack[-1] - 1
+            max_area = max(max_area, heights[top] * width)
+
+        return max_area
+      
