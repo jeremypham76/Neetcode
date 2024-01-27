@@ -1,0 +1,46 @@
+class TimeMap:
+
+    def __init__(self):
+        # Using defaultdict to automatically create an empty list for a new key
+        # The key is the actual key you want to store, and the value is a list of timestamp-value pairs
+        self.key_value_timestamp = defaultdict(list)
+
+    def set(self, key: str, value: str, timestamp: int) -> None:
+        # When setting a key-value pair, append the timestamp-value pair to the list associated with the key
+        self.key_value_timestamp[key].append((timestamp, value))
+
+    def get(self, key: str, timestamp: int) -> str:
+        if key not in self.key_value_timestamp:
+            # If the key is not present, return an empty string
+            return ""
+        
+        timestamps_values = self.key_value_timestamp[key]
+        left, right = 0, len(timestamps_values) - 1
+
+        while left <= right:
+            mid = (left + right) // 2
+            #unpack 2 values in the tupple timestamps_values into timestamp and value at the middle index.
+            mid_timestamp, mid_value = timestamps_values[mid]
+
+            if mid_timestamp == timestamp:
+                # If we find an exact match, return the corresponding value
+                return mid_value
+            elif mid_timestamp < timestamp:
+                # If the mid timestamp is less than the target timestamp, search in the right half
+                left = mid + 1
+            else:
+                # If the mid timestamp is greater than the target timestamp, search in the left half
+                right = mid - 1
+
+        # If right is greater than or equal to 0, return the value at the right index
+        # Otherwise, return an empty string
+        if right >= 0:
+            return timestamps_values[right][1]
+        else:
+            return ""
+
+
+# Your TimeMap object will be instantiated and called as such:
+# obj = TimeMap()
+# obj.set(key,value,timestamp)
+# param_2 = obj.get(key,timestamp)
