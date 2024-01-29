@@ -17,7 +17,7 @@ class Solution:
         for _ in range(n + 1):
             fast = fast.next
 
-        # Move both pointers until the fast pointer reaches the end.
+        # Move both pointers until the fast pointer reaches the end, slow will reach nth node:
         while fast is not None:
             slow = slow.next
             fast = fast.next
