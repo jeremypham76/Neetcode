@@ -1,0 +1,39 @@
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
+"""
+
+class Solution:
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        # Dictionary to store the mapping between original and copied nodes.
+        node_mapping = {None: None}
+
+        # First pass: Create a mapping of original nodes to their corresponding copied nodes.
+        current = head
+        while current:
+            # Create a new node for the current original node and add it to the mapping.
+            node_mapping[current] = Node(current.val)
+            current = current.next
+
+        # Second pass: Connect the copied nodes and update the random pointers.
+        current = head
+        while current:
+            # Retrieve the copied node for the current original node.
+            copied_node = node_mapping[current]
+
+            # Connect the next pointer to the copied node of the next original node.
+            copied_node.next = node_mapping[current.next]
+
+            # Connect the random pointer to the copied node of the corresponding original random node.
+            copied_node.random = node_mapping[current.random]
+
+            # Move to the next original node.
+            current = current.next
+
+        # Return the head of the copied linked list.
+        return node_mapping[head]
+        
