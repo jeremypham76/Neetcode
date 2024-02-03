@@ -1,0 +1,49 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+        # Initialize variables to store the values of l1 and l2
+        l1number, l2number = 0, 0
+        count = 0  # Initialize count for powers of 10
+
+        # Traverse the first linked list (l1) and calculate its numeric value
+        while l1:
+            l1number += l1.val * 10 ** count
+            count += 1
+            l1 = l1.next
+
+        count = 0  # Reset count for powers of 10
+
+        # Traverse the second linked list (l2) and calculate its numeric value
+        while l2:
+            l2number += l2.val * 10 ** count
+            count += 1
+            l2 = l2.next
+
+        # Calculate the sum of the two numeric values
+        l3number = l1number + l2number
+
+        # Create a dummy node for the result linked list
+        l3 = ListNode()
+        current = l3  # Pointer to the current node in the result linked list
+
+        # Handle the case where the sum is 0 (resulting in a single node with value 0)
+        if l3number == 0:
+            return l3
+
+        # Populate the nodes of the result linked list with digits of the sum
+        while l3number:
+            digit = l3number % 10  # Extract the least significant digit
+            l3number //= 10  # Remove the least significant digit
+
+            current.val = digit  # Set the value of the current node
+            if l3number:
+                current.next = ListNode()  # Create a new node if there are more digits
+                current = current.next  # Move the pointer to the next node
+
+        return l3  # Return the head of the result linked list
+            
+        
