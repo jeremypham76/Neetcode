@@ -1,0 +1,14 @@
+class Solution:
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        if not root:
+            return None
+        
+        # If both nodes are less than the current node's value, LCA must be in the left subtree
+        if p.val < root.val and q.val < root.val:
+            return self.lowestCommonAncestor(root.left, p, q)
+        # If both nodes are greater than the current node's value, LCA must be in the right subtree
+        elif p.val > root.val and q.val > root.val:
+            return self.lowestCommonAncestor(root.right, p, q)
+        # If one node is on the left and the other is on the right, current node is the LCA
+        else:
+            return root
